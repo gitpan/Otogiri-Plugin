@@ -3,7 +3,7 @@ use 5.008005;
 use strict;
 use warnings;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use Otogiri;
 use Module::Load;
@@ -13,7 +13,8 @@ sub load_plugin { #this code is taken from Teng/SQL::Maker's load_plugin
     $pkg = $pkg =~ s/^\+// ? $pkg : "Otogiri::Plugin::$pkg";
     Module::Load::load($pkg);
 
-    $class = ref($class) if ref($class);
+    $class = ref($class)     if ref($class);
+    $class = 'DBIx::Otogiri' if ( $class eq 'Otogiri' );
 
     my $alias = delete $opt->{alias} || +{};
     {
@@ -26,7 +27,8 @@ sub load_plugin { #this code is taken from Teng/SQL::Maker's load_plugin
     $pkg->init($class, $opt) if $pkg->can('init');
 }
 
-*Otogiri::load_plugin = \&load_plugin;
+*Otogiri::load_plugin       = \&load_plugin;
+*DBIx::Otogiri::load_plugin = \&load_plugin;
 
 
 
@@ -44,7 +46,7 @@ Otogiri::Plugin - make Otogiri to pluggable
     use Otogiri;
     use Otogiri::Plugin;
     my $db = Otogiri->new( connect_info => ["dbi:SQLite:dbname=$dbfile", '', ''] );
-    Otogiri::load_plugin('UsefulPlugin');
+    Otogiri->load_plugin('UsefulPlugin');
     $db->useful_method; #derived from UsefulPlugin
 
 
@@ -60,12 +62,12 @@ Load plugin to Otogiri or subclass. This method is exported to Otogiri or it's s
 By default, plugins are loaded from Otorigi::Plugin::$plugin_name namespace. If '+' is specified before $plugin_name, 
 plugins are loaded specified package name. for example,
 
-    Otogiri::load_plugin('UsefulPlugin');          # loads Otogiri::Plugin::UsefulPlugin
-    Otogiri::load_plugin('+Some::Useful::Plugin'); # loads Some::Useful::Plugin
+    Otogiri->load_plugin('UsefulPlugin');          # loads Otogiri::Plugin::UsefulPlugin
+    Otogiri->load_plugin('+Some::Useful::Plugin'); # loads Some::Useful::Plugin
 
 You can use alias method name like this,
 
-    Otogiri::load_plugin('UsefulPlugin', { 
+    Otogiri->load_plugin('UsefulPlugin', { 
         alias => {
             very_useful_method_but_has_so_long_name => 'very_useful_method', 
         }

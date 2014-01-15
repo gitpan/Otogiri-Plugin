@@ -9,6 +9,7 @@ minil.toml
 t/00_compile.t
 t/01_plugin.t
 t/02_alias.t
+t/03_plugin_use_from_otogiri_directly.t
 t/lib/Otogiri/Plugin/TestPlugin.pm
 META.yml
 MANIFEST

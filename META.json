@@ -44,7 +44,7 @@
       "runtime" : {
          "requires" : {
             "Module::Load" : "0",
-            "Otogiri" : "0",
+            "Otogiri" : "0.06",
             "perl" : "5.008005"
          }
       },
@@ -57,7 +57,7 @@
    "provides" : {
       "Otogiri::Plugin" : {
          "file" : "lib/Otogiri/Plugin.pm",
-         "version" : "0.01"
+         "version" : "0.02"
       }
    },
    "release_status" : "stable",
@@ -71,5 +71,5 @@
          "web" : "https://github.com/tsucchi/p5-Otogiri-Plugin"
       }
    },
-   "version" : "0.01"
+   "version" : "0.02"
 }
