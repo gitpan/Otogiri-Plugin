@@ -1,5 +1,5 @@
 requires 'Module::Load';
-requires 'Otogiri', '0.06';
+requires 'Otogiri', '0.12';
 requires 'perl', '5.008005';
 
 on configure => sub {
@@ -10,5 +10,6 @@ on configure => sub {
 
 on test => sub {
     requires 'Test::More', '0.98';
+    requires 'DBD::SQLite';
 };
 
